@@ -11,9 +11,9 @@ const NavBar = () => {
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-ghost btn-circle avatar"
+            className="btn btn-ghost mx-5 btn-circle avatar"
           >
-            <div className="w-10 mx-1 rounded-full">
+            <div className="w-10 rounded-full">
               <img
                 alt="Tailwind CSS Navbar component"
                 src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
