@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
-  const [emailId, setEmailId] = useState("elon@gmail.com");
-  const [password, setPassword] = useState("Elon@1604");
+  const [emailId, setEmailId] = useState("narendra@gmail.com");
+  const [password, setPassword] = useState("Narendra@1604");
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,11 +23,12 @@ const Login = () => {
         },
         { withCredentials: true }
       );
-      // console.log(res.data);
+
       dispatch(addUser(res.data));
       return navigate("/");
     } catch (error) {
-      console.log(error.message);
+      setError(error?.response?.data || "Something went wrong!");
+      console.log(error);
     }
   };
 
@@ -57,6 +59,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          <p className="text-red-500">{error}</p>
           <div className="card-actions justify-center">
             <button className="btn btn-secondary" onClick={handleLogin}>
               Login
