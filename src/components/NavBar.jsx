@@ -14,7 +14,11 @@ const NavBar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
+      await axios.post(
+        BASE_URL + "/logout",
+        {},
+        { withCredentials: true }
+      );
       dispatch(removeUser());
       navigate("/login");
     } catch (error) {
@@ -41,9 +45,14 @@ const NavBar = () => {
               <div className="w-10 rounded-full">
                 <img
                   alt="user photo"
-                  src={user.data.photoUrl || "https://via.placeholder.com/40"}
+                  src={
+                    user.photoUrl ||
+                    user.data.photoUrl ||
+                    "https://via.placeholder.com/40"
+                  }
                   onError={(e) => {
-                    e.target.src = "https://via.placeholder.com/40";
+                    e.target.src =
+                      "https://imgs.search.brave.com/0w706iazLuiZA7_266Xh7P1rBBHA32banx87yLoT5ZI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzY2L2Zm/L2NiLzY2ZmZjYjU2/NDgyYzY0YmRmNmI2/MDEwNjg3OTM4ODM1/LmpwZw";
                   }}
                 />
               </div>

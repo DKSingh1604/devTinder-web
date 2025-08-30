@@ -25,7 +25,7 @@ const Login = () => {
       );
 
       dispatch(addUser(res.data));
-      return navigate("/");
+      return navigate("/feed");
     } catch (error) {
       setError(error?.response?.data || "Something went wrong!");
       console.log(error);
@@ -61,7 +61,10 @@ const Login = () => {
           </div>
           <p className="text-red-500">{error}</p>
           <div className="card-actions justify-center">
-            <button className="btn btn-secondary" onClick={handleLogin}>
+            <button
+              className="btn btn-secondary"
+              onClick={handleLogin}
+            >
               Login
             </button>
           </div>
