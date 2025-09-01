@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import UserCard from "./userCard";
 import { BASE_URL } from "../utils/constants";
@@ -9,25 +9,31 @@ import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const EditProfile = ({ user }) => {
-  const [firstName, setFirstName] = useState(
-    user.data.firstName || user.firstName
-  );
-  const [lastName, setLastName] = useState(
-    user.data.lastName || user.lastName
-  );
-  const [photoUrl, setPhotoUrl] = useState(
-    user.data.photoUrl || user.photoUrl
-  );
-  const [age, setAge] = useState(user.data.age || user.age);
-  const [gender, setGender] = useState(
-    user.data.gender || user.gender
-  );
-  const [about, setAbout] = useState(user.data.about || user.about);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [about, setAbout] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //populate when user prop arrives
+  useEffect(() => {
+    if (!user) return;
+    const u = user.data || user;
+    setFirstName(u.firstName || "");
+    setLastName(u.lastName || "");
+    setPhotoUrl(u.photoUrl || "");
+    setAge(u.age || "");
+    setGender(u.gender || "");
+    setAbout(u.about || "");
+  }, [user]);
+
   const saveProfile = async () => {
+    setError("");
     try {
       const res = await axios.patch(
         BASE_URL + "/profile/edit",
@@ -42,9 +48,11 @@ const EditProfile = ({ user }) => {
         { withCredentials: true }
       );
       dispatch(addUser(res?.data?.data));
-      navigate("/profile");
+      // show success alert then navigate after short delay
+      setSuccess("Profile saved successfully");
+      setTimeout(() => navigate("/profile"), 900);
     } catch (error) {
-      setError(error.message);
+      setError(error.response.data);
     }
   };
 
@@ -56,7 +64,7 @@ const EditProfile = ({ user }) => {
             <div className="flex justify-center">
               <h2 className="card-title">Edit Profile</h2>
             </div>
-            <div className="form-control px-5 py-7">
+            <div className="form-control px-5">
               {/* First Name */}
               <input
                 type="text"
@@ -90,9 +98,11 @@ const EditProfile = ({ user }) => {
               {/* GENDER */}
               <select
                 defaultValue="Gender"
-                className="select select-ghost"
+                onChange={(e) => setGender(e.target.value)}
+                className="select select-ghost w-full max-w-xs mb-4"
               >
-                <option>{gender}</option>
+                <option value="">Select Gender</option>
+                <option>male</option>
                 <option>female</option>
                 <option>others</option>
               </select>
@@ -117,6 +127,30 @@ const EditProfile = ({ user }) => {
                 onChange={(e) => setPhotoUrl(e.target.value)}
               />
             </div>
+            {success && (
+              <div className="alert alert-success my-4" role="alert">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 shrink-0 stroke-current"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span>{success}</span>
+                <button
+                  className="btn btn-ghost btn-sm ml-4"
+                  onClick={() => setSuccess("")}
+                >
+                  Dismiss
+                </button>
+              </div>
+            )}
             <p className="text-red-500">{error}</p>
             <div className="card-actions justify-center">
               <button

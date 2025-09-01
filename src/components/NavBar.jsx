@@ -10,7 +10,8 @@ const NavBar = () => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(user);
+  const dropdownToggleRef = useRef(null);
+  // console.log(user);
 
   const handleLogout = async () => {
     try {
@@ -41,6 +42,7 @@ const NavBar = () => {
               tabIndex={0}
               role="button"
               className="btn btn-ghost mx-5 btn-circle avatar"
+              ref={dropdownToggleRef}
             >
               <div className="w-10 rounded-full">
                 <img
@@ -62,12 +64,21 @@ const NavBar = () => {
               className="menu menu-sm dropdown-content bg-base-200 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <Link to="/profile" className="justify-between">
+                <Link
+                  to="/profile"
+                  className="justify-between"
+                  onClick={() => dropdownToggleRef.current?.blur()}
+                >
                   Profile
                 </Link>
               </li>
               <li>
-                <a>Settings</a>
+                <Link
+                  to="/connections"
+                  onClick={() => dropdownToggleRef.current?.blur()}
+                >
+                  Connections
+                </Link>
               </li>
               <li>
                 <Link onClick={handleLogout}> Logout</Link>
