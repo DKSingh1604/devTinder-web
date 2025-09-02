@@ -44,7 +44,7 @@ const NavBar = () => {
               className="btn btn-ghost mx-5 btn-circle avatar"
               ref={dropdownToggleRef}
             >
-              <div className="w-10 rounded-full">
+              <div className="w-10 rounded-lg">
                 <img
                   alt="user photo"
                   src={

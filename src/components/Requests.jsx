@@ -1,12 +1,33 @@
+/* eslint-disable no-unused-vars */
 import axios from "axios";
 import React, { useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { addRequests } from "../utils/requestSlice";
+import { addRequests, removeRequest } from "../utils/requestSlice";
 
 const Requests = () => {
   const requests = useSelector((store) => store.requests);
   const dispatch = useDispatch();
+
+  //review requests
+  const reviewRequest = async (status, _id) => {
+    console.log("review request function triggered!");
+    try {
+      const res = axios.post(
+        BASE_URL + "/request/review/" + status + "/" + _id,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(removeRequest(_id));
+      console.log(`Request ${_id} ${status}ed successfully`);
+    } catch (error) {
+      console.log("Error reviewing request:", error);
+    }
+  };
+
+  //fetch the requests
   const fetchRequests = async () => {
     try {
       const res = await axios.get(
@@ -18,9 +39,10 @@ const Requests = () => {
       console.log(res.data);
       dispatch(addRequests(res.data.data || res.data));
     } catch (error) {
-      console.log(error);
+      console.log("Error fetching requests:", error);
     }
   };
+
   useEffect(() => {
     fetchRequests();
   }, []);
@@ -88,14 +110,25 @@ const Requests = () => {
                 </p>
 
                 <div className="mt-4 flex gap-2">
-                  <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
+                  {/* Reject Button */}
+                  <button
+                    className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800"
+                    onClick={() =>
+                      reviewRequest("rejected", request._id)
+                    }
+                  >
                     <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
                       Reject
                     </span>
                   </button>
+
+                  {/* Accept Button */}
                   <button
                     type="button"
                     className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                    onClick={() =>
+                      reviewRequest("accepted", request._id)
+                    }
                   >
                     Accept
                   </button>
