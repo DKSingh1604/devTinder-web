@@ -30,8 +30,13 @@ const Feed = () => {
   console.log("Feed data:", feed);
   return (
     feed && (
-      <div className="flex justify-center my-10">
-        <UserCard user={feed[0] || feed?.data?.[0]}></UserCard>
+      <div>
+        <h1 className="text-center my-10 text-2xl font-bold">
+          Your Feed
+        </h1>
+        <div className="flex justify-center my-10">
+          <UserCard user={feed[0] || feed?.data?.[0]}></UserCard>
+        </div>
       </div>
     )
   );

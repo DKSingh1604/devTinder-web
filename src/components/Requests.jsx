@@ -1,52 +1,48 @@
-/* eslint-disable no-unused-vars */
 import axios from "axios";
 import React, { useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { addConnections } from "../utils/connectionSlice";
-import { Card } from "flowbite-react";
+import { addRequests } from "../utils/requestSlice";
 
-const Connections = () => {
-  const connections = useSelector((store) => store.connections);
+const Requests = () => {
+  const requests = useSelector((store) => store.requests);
   const dispatch = useDispatch();
-
-  // debug: show reducer store value
-  console.log("Connections selector value:", connections);
-
-  const fetchConnections = async () => {
+  const fetchRequests = async () => {
     try {
-      const res = await axios.get(BASE_URL + "/user/connections", {
-        withCredentials: true,
-      });
-      console.log(res.data.data || res.data);
-      dispatch(addConnections(res.data.data));
+      const res = await axios.get(
+        BASE_URL + "/user/requests/received",
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(res.data);
+      dispatch(addRequests(res.data.data || res.data));
     } catch (error) {
       console.log(error);
     }
   };
-
   useEffect(() => {
-    fetchConnections();
+    fetchRequests();
   }, []);
 
   // show loading while undefined
-  if (connections === undefined || connections === null) {
+  if (requests === undefined || requests === null) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p>Loading connections…</p>
+        <p>Loading requests…</p>
       </div>
     );
   }
 
-  const list = Array.isArray(connections)
-    ? connections
-    : connections?.data ?? [];
+  const list = Array.isArray(requests)
+    ? requests
+    : requests?.data.data ?? [];
 
   if (list.length === 0)
     return (
       <div className="min-h-screen flex items-center justify-center ">
         <h1 className="font-bold text-2xl text-center">
-          You don't have any connections yet!
+          You don't have any requests yet!
         </h1>
       </div>
     );
@@ -55,11 +51,11 @@ const Connections = () => {
     <div className="min-h-screen flex  justify-center my-10">
       <div className="w-full max-w-5xl px-4">
         <h1 className="font-bold text-2xl text-center mb-10">
-          Connections
+          Requests
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {list.map((connection, index) => {
+          {list.map((request, index) => {
             const {
               id,
               firstName,
@@ -68,7 +64,7 @@ const Connections = () => {
               age,
               gender,
               about,
-            } = connection || {};
+            } = request.fromUserId || {};
 
             return (
               <article
@@ -92,11 +88,16 @@ const Connections = () => {
                 </p>
 
                 <div className="mt-4 flex gap-2">
-                  <button className="btn btn-sm btn-ghost">
-                    View
+                  <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
+                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
+                      Reject
+                    </span>
                   </button>
-                  <button className="btn btn-sm btn-primary">
-                    Message
+                  <button
+                    type="button"
+                    className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                  >
+                    Accept
                   </button>
                 </div>
               </article>
@@ -108,4 +109,4 @@ const Connections = () => {
   );
 };
 
-export default Connections;
+export default Requests;

@@ -81,6 +81,14 @@ const NavBar = () => {
                 </Link>
               </li>
               <li>
+                <Link
+                  to="/requests"
+                  onClick={() => dropdownToggleRef.current?.blur()}
+                >
+                  Requests
+                </Link>
+              </li>
+              <li>
                 <Link onClick={handleLogout}> Logout</Link>
               </li>
             </ul>
