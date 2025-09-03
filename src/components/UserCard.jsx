@@ -15,6 +15,8 @@ const UserCard = ({ user }) => {
         { withCredentials: true }
       );
       dispatch(removeUserFromFeed(userId));
+
+      console.log(`Request sent to ${userId} with status: ${status}`);
     } catch (error) {
       console.log(`Error sending request: ${error}`);
     }
@@ -39,7 +41,7 @@ const UserCard = ({ user }) => {
 
   return (
     <div>
-      <div className="card bg-base-200 w-96 shadow-sm">
+      <div className="card bg-base-200 w-96 h-145 shadow-sm">
         <figure>
           <img
             src={

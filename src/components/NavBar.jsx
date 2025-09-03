@@ -28,7 +28,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="navbar bg-base-300 shadow-sm">
+    <div className="navbar bg-base-100 shadow-sm fixed top-0 w-full z-50">
       <div className="flex-1">
         <Link to="/feed" className="btn btn-ghost text-xl">
           👨‍💻 Dev Tinder

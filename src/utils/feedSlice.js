@@ -3,12 +3,20 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const feedSlice = createSlice({
   name: "feed",
-  initialState: null,
+  initialState: [], // Changed from null to [] to prevent null errors
   reducers: {
-    addFeed: (state, action) => action.payload,
+    addFeed: (state, action) => {
+      // Handle nested data (e.g., { data: [users] }) or direct array
+      const payload = action.payload;
+      if (Array.isArray(payload)) return payload;
+      if (payload?.data && Array.isArray(payload.data))
+        return payload.data;
+      return []; // Fallback to empty array if invalid
+    },
     removeUserFromFeed: (state, action) => {
-      const newFeed = state.filter((user) => user._id !== action.payload);
-      return newFeed;
+      // Handle case where state might not be an array (e.g., initial load)
+      if (!Array.isArray(state)) return state;
+      return state.filter((user) => user?._id !== action.payload);
     },
   },
 });
