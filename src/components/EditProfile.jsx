@@ -57,117 +57,227 @@ const EditProfile = ({ user }) => {
   };
 
   return (
-    <div className="flex justify-center my-10">
-      <div className="flex justify-center my-10 mx-10">
-        <div className="card card-border bg-base-200 w-96">
-          <div className="card-body ">
-            <div className="flex justify-center">
-              <h2 className="card-title">Edit Profile</h2>
-            </div>
-            <div className="form-control px-5">
-              {/* First Name */}
-              <input
-                type="text"
-                placeholder="First Name"
-                id="firstName"
-                value={firstName}
-                className="input input-ghost w-full max-w-xs mb-4"
-                onChange={(e) => setFirstName(e.target.value)}
-              />
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-8">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-extrabold font-mono bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 tracking-wider">
+            Edit Your Profile
+          </h1>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            Update your information and see how it looks to other
+            developers
+          </p>
+        </div>
 
-              {/* LAST NAME */}
-              <input
-                type="text"
-                placeholder="Last Name"
-                id="lastName"
-                value={lastName}
-                className="input input-ghost w-full max-w-xs mb-4"
-                onChange={(e) => setLastName(e.target.value)}
-              />
-
-              {/* AGE */}
-              <input
-                type="text"
-                placeholder="Age"
-                id="age"
-                value={age}
-                className="input input-ghost w-full max-w-xs mb-4"
-                onChange={(e) => setAge(e.target.value)}
-              />
-
-              {/* GENDER */}
-              <select
-                defaultValue="Gender"
-                onChange={(e) => setGender(e.target.value)}
-                className="select select-ghost w-full max-w-xs mb-4"
-              >
-                <option value="">Select Gender</option>
-                <option>male</option>
-                <option>female</option>
-                <option>others</option>
-              </select>
-
-              {/* ABOUT */}
-              <input
-                type="text"
-                placeholder="About"
-                id="about"
-                value={about}
-                className="input input-ghost w-full max-w-xs mb-4 mt-5"
-                onChange={(e) => setAbout(e.target.value)}
-              />
-
-              {/* PHOT0 URL */}
-              <input
-                type="text"
-                placeholder="Photo Url"
-                id="photoUrl"
-                value={photoUrl}
-                className="input input-ghost w-full max-w-xs mb-4"
-                onChange={(e) => setPhotoUrl(e.target.value)}
-              />
-            </div>
-            {success && (
-              <div className="alert alert-success my-4" role="alert">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 shrink-0 stroke-current"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+        <div className="flex flex-col lg:flex-row justify-center items-start gap-8 max-w-7xl mx-auto mb-15">
+          {/* Form Section */}
+          <div className="flex-1 max-w-lg">
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 shadow-2xl">
+              <div className="text-center mb-6">
+                <h2 className="text-2xl font-bold text-white mb-2">
+                  Profile Details
+                </h2>
+                <p className="text-gray-400 text-sm">
+                  Make your profile stand out
+                </p>
+              </div>
+              <div className="form-control space-y-4">
+                {/* First Name */}
+                <div className="form-group">
+                  <label className="label">
+                    <span className="label-text text-white font-medium">
+                      👤 First Name
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter your first name"
+                    id="firstName"
+                    value={firstName}
+                    className="input input-bordered w-full bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-purple-400 focus:outline-none"
+                    onChange={(e) => setFirstName(e.target.value)}
                   />
-                </svg>
-                <span>{success}</span>
+                </div>
+
+                {/* Last Name */}
+                <div className="form-group">
+                  <label className="label">
+                    <span className="label-text text-white font-medium">
+                      👤 Last Name
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter your last name"
+                    id="lastName"
+                    value={lastName}
+                    className="input input-bordered w-full bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-purple-400 focus:outline-none"
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </div>
+
+                {/* Age */}
+                <div className="form-group">
+                  <label className="label">
+                    <span className="label-text text-white font-medium">
+                      🎂 Age
+                    </span>
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="Enter your age"
+                    id="age"
+                    value={age}
+                    className="input input-bordered w-full bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-purple-400 focus:outline-none"
+                    onChange={(e) => setAge(e.target.value)}
+                  />
+                </div>
+
+                {/* Gender */}
+                <div className="form-group">
+                  <label className="label">
+                    <span className="label-text text-white font-medium">
+                      ⚧ Gender
+                    </span>
+                  </label>
+                  <select
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    className="select select-bordered w-full bg-white/10 border-white/20 text-white focus:border-purple-400 focus:outline-none"
+                  >
+                    <option value="" className="text-gray-600">
+                      Select Gender
+                    </option>
+                    <option value="male" className="text-gray-600">
+                      Male
+                    </option>
+                    <option value="female" className="text-gray-600">
+                      Female
+                    </option>
+                    <option value="others" className="text-gray-600">
+                      Others
+                    </option>
+                  </select>
+                </div>
+
+                {/* About */}
+                <div className="form-group">
+                  <label className="label">
+                    <span className="label-text text-white font-medium">
+                      📝 About
+                    </span>
+                  </label>
+                  <textarea
+                    placeholder="Tell us about yourself..."
+                    id="about"
+                    value={about}
+                    rows="3"
+                    className="textarea textarea-bordered w-full bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-purple-400 focus:outline-none resize-none"
+                    onChange={(e) => setAbout(e.target.value)}
+                  />
+                </div>
+
+                {/* Photo URL */}
+                <div className="form-group">
+                  <label className="label">
+                    <span className="label-text text-white font-medium">
+                      📸 Photo URL
+                    </span>
+                  </label>
+                  <input
+                    type="url"
+                    placeholder="https://example.com/photo.jpg"
+                    id="photoUrl"
+                    value={photoUrl}
+                    className="input input-bordered w-full bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-purple-400 focus:outline-none"
+                    onChange={(e) => setPhotoUrl(e.target.value)}
+                  />
+                </div>
+              </div>
+              {/* Success Message */}
+              {success && (
+                <div className="alert alert-success bg-green-500/20 border-green-500/30 text-green-300 border mt-6">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 shrink-0 stroke-current"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <span className="font-medium">{success}</span>
+                  <button
+                    className="btn btn-ghost btn-sm ml-4 text-green-300 hover:bg-green-500/20"
+                    onClick={() => setSuccess("")}
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
+
+              {/* Error Message */}
+              {error && (
+                <div className="alert alert-error bg-red-500/20 border-red-500/30 text-red-300 border mt-6">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 shrink-0 stroke-current"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <span className="font-medium">{error}</span>
+                </div>
+              )}
+
+              {/* Save Button */}
+              <div className="card-actions justify-center mt-8">
                 <button
-                  className="btn btn-ghost btn-sm ml-4"
-                  onClick={() => setSuccess("")}
+                  className="btn btn-primary bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 border-none text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+                  onClick={saveProfile}
                 >
-                  Dismiss
+                  💾 Save Profile
                 </button>
               </div>
-            )}
-            <p className="text-red-500">{error}</p>
-            <div className="card-actions justify-center">
-              <button
-                className="btn btn-secondary"
-                onClick={saveProfile}
-              >
-                Save
-              </button>
+            </div>
+          </div>
+
+          {/* Preview Section */}
+          <div className="flex-1 max-w-md">
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 shadow-2xl">
+              <div className="text-center mb-6">
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  👀 Live Preview
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  See how your profile looks
+                </p>
+              </div>
+              <div className="flex justify-center">
+                <UserCard
+                  user={{
+                    firstName,
+                    lastName,
+                    photoUrl,
+                    age,
+                    gender,
+                    about,
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="flex flex-col mx-15 items-center">
-        <h1 className="mb-5">Preview</h1>
-        <UserCard
-          user={{ firstName, lastName, photoUrl, age, gender, about }}
-        ></UserCard>
       </div>
     </div>
   );

@@ -30,12 +30,9 @@ const Requests = () => {
   //fetch the requests
   const fetchRequests = async () => {
     try {
-      const res = await axios.get(
-        BASE_URL + "/user/requests/received",
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axios.get(BASE_URL + "/user/requests/received", {
+        withCredentials: true,
+      });
       console.log(res.data);
       dispatch(addRequests(res.data.data || res.data));
     } catch (error) {
@@ -50,8 +47,14 @@ const Requests = () => {
   // show loading while undefined
   if (requests === undefined || requests === null) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>Loading requests…</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400 mx-auto mb-4"></div>
+          <p className="text-white font-medium">Loading requests…</p>
+          <p className="text-gray-400 text-sm mt-2">
+            Checking your incoming requests
+          </p>
+        </div>
       </div>
     );
   }
@@ -62,21 +65,41 @@ const Requests = () => {
 
   if (list.length === 0)
     return (
-      <div className="min-h-screen flex items-center justify-center ">
-        <h1 className="font-bold text-2xl text-center">
-          You don't have any requests yet!
-        </h1>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="text-center px-6">
+          <div className="text-6xl mb-4">📨</div>
+          <h1 className="font-bold text-2xl text-white mb-2">
+            No requests yet
+          </h1>
+          <p className="text-gray-400 mb-6">
+            You're all caught up. When someone requests to connect, it'll
+            appear here.
+          </p>
+          <div className="inline-flex gap-3">
+            <button className="btn btn-primary bg-gradient-to-r from-purple-600 to-blue-600 border-none">
+              Discover Developers
+            </button>
+            <button className="btn btn-ghost text-white/80">
+              Manage Profile
+            </button>
+          </div>
+        </div>
       </div>
     );
 
   return (
-    <div className="min-h-screen flex  justify-center my-10">
-      <div className="w-full max-w-5xl px-4">
-        <h1 className="font-bold text-2xl text-center mb-10">
-          Requests
-        </h1>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-12">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-extrabold text-white tracking-wide">
+            Incoming Requests
+          </h1>
+          <p className="text-gray-400 mt-2">
+            Review and respond to developer connection requests
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {list.map((request, index) => {
             const {
               id,
@@ -90,45 +113,37 @@ const Requests = () => {
 
             return (
               <article
-                key={id ?? index}
-                className="bg-base-200 rounded-2xl shadow-md overflow-hidden p-4 flex flex-col items-center text-center"
+                key={request._id ?? id ?? index}
+                className="bg-white/5 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden p-6 flex flex-col items-center text-center border border-white/10 hover:scale-105 transform transition-all duration-200"
               >
-                <img
-                  src={photoUrl || "https://via.placeholder.com/160"}
-                  alt={`${firstName || "User"} avatar`}
-                  className="w-28 h-28 rounded-full object-cover mb-4 ring-1 ring-black/5"
-                />
-                <div className="text-lg font-semibold">
+                <div className="w-28 h-28 rounded-full overflow-hidden mb-4 ring-2 ring-purple-400/40">
+                  <img
+                    src={photoUrl || "https://via.placeholder.com/160"}
+                    alt={`${firstName || "User"} avatar`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="text-lg font-semibold text-white">
                   {firstName ?? "Unknown"} {lastName ?? ""}
                 </div>
-                <div className="text-sm text-muted-foreground mt-1">
-                  {age ? `${age} yrs` : ""}{" "}
-                  {gender ? ` • ${gender}` : ""}
+                <div className="text-sm text-gray-300 mt-1">
+                  {age ? `${age} yrs` : ""} {gender ? ` • ${gender}` : ""}
                 </div>
-                <p className="text-sm mt-3 line-clamp-3 px-2">
+                <p className="text-sm mt-3 text-gray-300 line-clamp-3 px-2">
                   {about ?? "No description"}
                 </p>
 
-                <div className="mt-4 flex gap-2">
-                  {/* Reject Button */}
+                <div className="mt-4 flex gap-3">
                   <button
-                    className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800"
-                    onClick={() =>
-                      reviewRequest("rejected", request._id)
-                    }
+                    className="btn btn-sm btn-ghost text-white/90"
+                    onClick={() => reviewRequest("rejected", request._id)}
                   >
-                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
-                      Reject
-                    </span>
+                    Reject
                   </button>
 
-                  {/* Accept Button */}
                   <button
-                    type="button"
-                    className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                    onClick={() =>
-                      reviewRequest("accepted", request._id)
-                    }
+                    className="btn btn-sm bg-gradient-to-r from-green-400 via-green-500 to-green-600 border-none text-white"
+                    onClick={() => reviewRequest("accepted", request._id)}
                   >
                     Accept
                   </button>
