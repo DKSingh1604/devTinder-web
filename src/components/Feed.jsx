@@ -3,7 +3,7 @@ import React, { useEffect, useCallback } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
-import UserCard from "./userCard";
+import UserCard from "./UserCard";
 
 const Feed = () => {
   const feed = useSelector((store) => store.feed);
@@ -38,9 +38,7 @@ const Feed = () => {
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-white text-lg font-medium">
-            Loading your feed...
-          </p>
+          <p className="text-white text-lg font-medium">Loading your feed...</p>
           <p className="text-gray-400 text-sm mt-2">
             Finding amazing developers for you
           </p>

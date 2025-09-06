@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 import { useState } from "react";
-import UserCard from "./userCard";
+import UserCard from "./UserCard";
 import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -64,8 +64,7 @@ const EditProfile = ({ user }) => {
             Edit Your Profile
           </h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Update your information and see how it looks to other
-            developers
+            Update your information and see how it looks to other developers
           </p>
         </div>
 
